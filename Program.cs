@@ -4,6 +4,18 @@ using Azure.Messaging.EventGrid.SystemEvents;
 using System.Text.Json;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+// ローカル実行時にConsole Loggerを使用
+if (builder.Environment.IsDevelopment())
+{
+    builder.Logging.AddConsole();
+}
+else
+{
+    // クラウド実行時にApplication Insightsを使用
+    builder.Services.AddApplicationInsightsTelemetry();
+}
+
 WebApplication app = builder.Build();
 
 app.MapGet("/", () => "Eventgrid subscription validation");
