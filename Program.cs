@@ -18,7 +18,10 @@ else
 
 WebApplication app = builder.Build();
 
-app.MapGet("/", () => "Eventgrid subscription validation");
+app.MapGet("/", (ILogger<Program> logger) => 
+{
+    logger.LogInformation("/ is called");
+    return "Eventgrid subscription validation";});
 
 app.MapPost("/api/incomingCall", (
     [FromBody] EventGridEvent[] eventGridEvents,
